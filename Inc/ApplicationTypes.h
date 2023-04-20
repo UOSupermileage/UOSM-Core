@@ -15,6 +15,8 @@
 #define PUBLIC
 #define PRIVATE
 
+#define PI_T2 6.28318530718      // Pi * 2
+
 #define MAX_PERCENTAGE 1000
 #define MIN_PERCENTAGE 0
 
@@ -46,7 +48,11 @@ typedef enum { Clear = 0, Set = 1 } flag_status_t;
 typedef uint16_t length_t;
 typedef uint16_t percentage_t;
 typedef uint32_t velocity_t;
-
+typedef uint16_t throttle_raw_t;
+typedef uint16_t speed_t;
+typedef float km_per_second_t;
+typedef uint16_t seconds_t;
+typedef uint32_t ms_t;
 
 typedef struct
 {
