@@ -14,10 +14,10 @@
 #define DebugPrint(...) SerialPrintln(__VA_ARGS__)
 
 // Callbacks
-void ThrottleDataCallback(iCommsMessage_t* msg);
-void ErrorDataCallback(iCommsMessage_t* msg);
-void SpeedDataCallback(iCommsMessage_t* msg);
-void EventDataCallback(iCommsMessage_t* msg);
+extern void ThrottleDataCallback(iCommsMessage_t* msg);
+extern void ErrorDataCallback(iCommsMessage_t* msg);
+extern void SpeedDataCallback(iCommsMessage_t* msg);
+extern void EventDataCallback(iCommsMessage_t* msg);
 
 /*********************************************************************************
  *
@@ -33,25 +33,21 @@ const ICommsMessageInfo CANMessageLookUpTable[NUMBER_CAN_MESSAGE_IDS] =
 			{ERROR_DATA_ID,				0x0401,				2,		&ErrorDataCallback},
 	};
 
-void ThrottleDataCallback(iCommsMessage_t* msg)
+__weak void ThrottleDataCallback(iCommsMessage_t* msg)
 {
-	DebugPrint("ThrottleDataCallback! %d", msg->standardMessageID);
-	// DebugPrint("Throttle Raw: [%x][%x] length: [%d]", msg.data[1], msg.data[0], msg.dataLength);
-	uint32_t throttle = readMsg(msg);
-	DebugPrint("CAN Throttle percentage received: %d", throttle);
-	Safety_SetThrottlePercentage(throttle);
+	DebugPrint("ThrottleDataCallback not implemented! %d", msg->standardMessageID);
 }
-void ErrorDataCallback(iCommsMessage_t* msg)
+__weak void ErrorDataCallback(iCommsMessage_t* msg)
 {
-//	DebugPrint("ErrorDataCallback! %d", msg->standardMessageID);
+	DebugPrint("ErrorDataCallback not implemented! %d", msg->standardMessageID);
 }
-void SpeedDataCallback(iCommsMessage_t* msg)
+__weak void SpeedDataCallback(iCommsMessage_t* msg)
 {
-//	DebugPrint("SpeedDataCallback! %d", msg->standardMessageID);
+	DebugPrint("SpeedDataCallback not implemented! %d", msg->standardMessageID);
 }
-void EventDataCallback(iCommsMessage_t* msg)
+__weak void EventDataCallback(iCommsMessage_t* msg)
 {
-//	DebugPrint("EventDataCallbackCallback! %d", msg->standardMessageID);
+	DebugPrint("EventDataCallback not implemented! %d", msg->standardMessageID);
 }
 
 PUBLIC const ICommsMessageInfo* CANMessageLookUpGetInfo(ICommsMessageLookUpIndex id) {
