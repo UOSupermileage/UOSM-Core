@@ -10,12 +10,16 @@
 #ifndef _APPLICATIONTYPES_H_
 #define _APPLICATIONTYPES_H_
 
+#include "SerialDebugDriver.h"
+
+#define DebugPrint(...) SerialPrintln(__VA_ARGS__)
+
 #include <stdint.h>
 
 #define PUBLIC
 #define PRIVATE
 
-#define PI_T2 6.28318530718      // Pi * 2
+#define PI_T2 6.28318530718 // Pi * 2
 
 #define MAX_PERCENTAGE 1000
 #define MIN_PERCENTAGE 0
@@ -26,7 +30,8 @@ typedef enum
 	RESULT_OK
 } result_t;
 
-typedef enum {
+typedef enum
+{
 	ENABLED,
 	DISABLED
 } Enable_t;
@@ -42,9 +47,13 @@ typedef enum EventCode
 	TIMER
 } EventCode;
 
-typedef enum { Clear = 0, Set = 1 } flag_status_t;
+typedef enum
+{
+	Clear = 0,
+	Set = 1
+} flag_status_t;
 
-
+typedef uint16_t torque_t;
 typedef uint16_t length_t;
 typedef uint16_t percentage_t;
 typedef uint32_t velocity_t;
@@ -57,9 +66,8 @@ typedef uint32_t ms_t;
 typedef struct
 {
 	uint16_t standardMessageID; // 11 bit max
-	uint8_t dataLength; // max 8
+	uint8_t dataLength;			// max 8
 	uint8_t data[8];
-}iCommsMessage_t;
-
+} iCommsMessage_t;
 
 #endif /* _APPLICATIONTYPES_H_ */
