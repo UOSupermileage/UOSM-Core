@@ -14,7 +14,7 @@
 #include <string.h>
 #define DebugPrint(...) SerialPrintln(__VA_ARGS__)
 
-const char *ICM_TAG = "#ICM:"
+const char *ICM_TAG = "#ICM:";
 
 /***********************************************************
  *
