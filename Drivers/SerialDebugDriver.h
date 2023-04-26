@@ -16,9 +16,6 @@
 #include <stdio.h>
 #include <string.h>
 
-// Our headers
-#include "ApplicationTypes.h"
-
 #define MAX_SERIAL_PRINT_LENGTH 128
 
 //#define VERBOSE
@@ -27,7 +24,7 @@
  * Initalization of the serial peripheral is done in main.c
  * Auto generated init by the IOC file */
 
-PUBLIC void SerialPrint(const char *message, ...);
-PUBLIC void SerialPrintln(const char *message, ...);
+void SerialPrint(const char *message, ...);
+void SerialPrintln(const char *message, ...);
 
 #endif /* USERDRIVERS_SERIALDEBUGDRIVER_H_ */
