@@ -6,10 +6,7 @@
  */
 
 #include "CANMessageLookUpModule.h"
-#include "SerialDebugDriver.h"
 #include "CANDriver.h"
-
-#define DebugPrint(...) SerialPrintln(__VA_ARGS__)
 
 // Callbacks
 extern void ThrottleDataCallback(iCommsMessage_t* msg);

@@ -1,11 +1,6 @@
 #include "CANConfig.h"
-
+#include "ApplicationTypes.h"
 #include "MCP2515.h"
-
-#include "SerialDebugDriver.h"
-
-// Function alias - replace with the driver api
-#define DebugPrint(...) SerialPrintln(__VA_ARGS__)
 
 /* Pin 설정에 맞게 수정필요. Modify below items for your SPI configurations */
 extern SPI_HandleTypeDef EXT_SPI_CAN;
