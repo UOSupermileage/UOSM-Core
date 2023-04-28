@@ -36,12 +36,12 @@ typedef enum
 	DISABLED
 } Enable_t;
 
-typedef enum ErrorCode
+typedef enum
 {
 	THROTTLE_TOO_HIGH
 } ErrorCode;
 
-typedef enum EventCode
+typedef enum
 {
 	DEADMAN,
 	TIMER
@@ -49,14 +49,21 @@ typedef enum EventCode
 
 typedef enum
 {
+	MOTOR_MODE_NORMAL,
+	MOTOR_MODE_RTMI,
+	MOTOR_MODE_NORMAL
+} MotorMode;
+
+typedef enum
+{
 	Clear = 0,
 	Set = 1
 } flag_status_t;
 
-typedef uint16_t torque_t;
+typedef int16_t torque_t;
 typedef uint16_t length_t;
 typedef uint16_t percentage_t;
-typedef uint32_t velocity_t;
+typedef int32_t velocity_t;
 typedef uint16_t throttle_raw_t;
 typedef uint16_t speed_t;
 typedef float km_per_second_t;
