@@ -44,7 +44,8 @@ typedef enum
 typedef enum
 {
 	DEADMAN,
-	TIMER
+	TIMER,
+	MOTOR_INITIALIZING
 } EventCode;
 
 typedef enum
