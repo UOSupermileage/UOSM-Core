@@ -51,7 +51,7 @@ typedef enum
 {
 	MOTOR_MODE_NORMAL,
 	MOTOR_MODE_RTMI,
-	MOTOR_MODE_NORMAL
+	MOTOR_MODE_IDLE
 } MotorMode;
 
 typedef enum
