@@ -7,8 +7,8 @@
  *  This is the module for processing information from the cars intercommunication system
  *  Can only import interface files
  */
-#include "CANDriver.h"
 #include "InternalCommsModule.h"
+#include "CANDriver.h"
 #include "CANMessageLookUpModule.h"
 #include <string.h>
 
@@ -79,15 +79,13 @@ const char *ICM_TAG = "#ICM:";
  ************************************************************/
 #define ICOMMS_DRIVER_RECEIVE_MESSAGE(...) CANSPI_Receive(__VA_ARGS__)
 
-    typedef struct HeapNode
-{
+typedef struct HeapNode {
     uint16_t key;
     iCommsMessage_t value;
 } HeapNode_t;
 
 #define MAX_HEAP_SIZE 32
-typedef struct heap
-{
+typedef struct heap {
     uint8_t heapsize;
     HeapNode_t heapArray[MAX_HEAP_SIZE];
 } Heap_t;
@@ -101,20 +99,17 @@ uint8_t Heap_GetHeapSize(Heap_t *h);
 
 Heap_t canRxHeap;
 
-PUBLIC result_t IComms_Init()
-{
+PUBLIC result_t IComms_Init() {
     result_t ret = ICOMMS_DRIVER_INITIALIZE();
     Heap_InitHeap(&canRxHeap);
     return ret;
 }
 
-PUBLIC result_t IComms_Transmit(iCommsMessage_t *txMsg)
-{
+PUBLIC result_t IComms_Transmit(iCommsMessage_t *txMsg) {
     result_t ret = ICOMMS_DRIVER_TRANSMIT_MESSAGE(txMsg);
     return ret;
 }
-PUBLIC result_t IComms_ReceiveNextMessage(iCommsMessage_t *rxMsg)
-{
+PUBLIC result_t IComms_ReceiveNextMessage(iCommsMessage_t *rxMsg) {
     // if nothing to dequeue return fail
     if (Heap_GetHeapSize(&canRxHeap) == 0)
         return RESULT_FAIL;
@@ -124,8 +119,7 @@ PUBLIC result_t IComms_ReceiveNextMessage(iCommsMessage_t *rxMsg)
     return RESULT_OK;
 }
 
-PUBLIC uint8_t IComms_HasRxMessage()
-{
+PUBLIC uint8_t IComms_HasRxMessage() {
     if (Heap_GetHeapSize(&canRxHeap) != 0)
         return 1;
 
@@ -135,18 +129,13 @@ PUBLIC uint8_t IComms_HasRxMessage()
 
 // Since we are currently polling, the update function needs to be called.
 // Alternatively this can be put into an interrupt
-PUBLIC void IComms_Update()
-{
-    while (ICOMMS_DRIVER_MESSAGE_AVAILABLE() != 0)
-    {
+PUBLIC void IComms_Update() {
+    while (ICOMMS_DRIVER_MESSAGE_AVAILABLE() != 0) {
         iCommsMessage_t rxMsg;
         result_t ret = ICOMMS_DRIVER_RECEIVE_MESSAGE(&rxMsg);
-        if (ret == RESULT_FAIL)
-        {
+        if (ret == RESULT_FAIL) {
             DebugPrint("#ICM: FAILED TO RETRIEVE ICOMMS MESSAGE FROM DRIVER");
-        }
-        else
-        {
+        } else {
             DebugPrint("#ICM: MESSAGE RECIEVED, ADDING TO QUEUE");
             // enqueue
             HeapNode_t n = (HeapNode_t){rxMsg.standardMessageID, rxMsg};
@@ -159,8 +148,7 @@ PUBLIC void IComms_Update()
     }
 }
 
-PUBLIC iCommsMessage_t IComms_CreateMessage(uint16_t standardMessageID, uint8_t dataLength, uint8_t data[8])
-{
+PUBLIC iCommsMessage_t IComms_CreateMessage(uint16_t standardMessageID, uint8_t dataLength, uint8_t data[8]) {
     iCommsMessage_t msg;
     msg.standardMessageID = standardMessageID;
     msg.dataLength = dataLength;
@@ -170,8 +158,7 @@ PUBLIC iCommsMessage_t IComms_CreateMessage(uint16_t standardMessageID, uint8_t 
     return msg;
 }
 
-PUBLIC iCommsMessage_t IComms_CreatePercentageMessage(uint16_t standardMessageID, percentage_t percentage)
-{
+PUBLIC iCommsMessage_t IComms_CreatePercentageMessage(uint16_t standardMessageID, percentage_t percentage) {
     uint8_t data[8];
     data[0] = percentage;
     data[1] = percentage >> 8;
@@ -179,8 +166,17 @@ PUBLIC iCommsMessage_t IComms_CreatePercentageMessage(uint16_t standardMessageID
     return IComms_CreateMessage(standardMessageID, 2, data);
 }
 
-PUBLIC iCommsMessage_t IComms_CreateErrorMessage(uint16_t standardMessageID, uint8_t code, uint8_t status)
-{
+PUBLIC iCommsMessage_t IComms_Create32BitMessage(uint16_t standardMessageID, uint32_t value) {
+    uint8_t data[8];
+    data[0] = value;
+    data[1] = value >> 8;
+    data[1] = value >> 16;
+    data[1] = value >> 24;
+
+    return IComms_CreateMessage(standardMessageID, 4, data);
+}
+
+PUBLIC iCommsMessage_t IComms_CreateErrorMessage(uint16_t standardMessageID, uint8_t code, uint8_t status) {
     uint8_t data[8];
     data[0] = status;
     data[1] = code;
@@ -188,8 +184,7 @@ PUBLIC iCommsMessage_t IComms_CreateErrorMessage(uint16_t standardMessageID, uin
     return IComms_CreateMessage(standardMessageID, 2, data);
 }
 
-PUBLIC iCommsMessage_t IComms_CreateEventMessage(uint16_t standardMessageID, uint8_t code, uint8_t status)
-{
+PUBLIC iCommsMessage_t IComms_CreateEventMessage(uint16_t standardMessageID, uint8_t code, uint8_t status) {
     uint8_t data[8];
     data[0] = status;
     data[1] = code;
@@ -197,19 +192,14 @@ PUBLIC iCommsMessage_t IComms_CreateEventMessage(uint16_t standardMessageID, uin
     return IComms_CreateMessage(standardMessageID, 2, data);
 }
 
-PUBLIC void IComms_PeriodicReceive()
-{
+PUBLIC void IComms_PeriodicReceive() {
     IComms_Update();
-    while (IComms_HasRxMessage())
-    {
+    while (IComms_HasRxMessage()) {
         iCommsMessage_t rxMsg;
         result_t ret = IComms_ReceiveNextMessage(&rxMsg);
-        if (ret == RESULT_FAIL)
-        {
+        if (ret == RESULT_FAIL) {
             DebugPrint("%s Error Retrieving next message", ICM_TAG);
-        }
-        else
-        {
+        } else {
             DebugPrint("%s Standard ID: %d", ICM_TAG, rxMsg.standardMessageID);
             DebugPrint("%s DLC: %d", ICM_TAG, rxMsg.dataLength);
 
@@ -220,20 +210,16 @@ PUBLIC void IComms_PeriodicReceive()
             // NOTE: with the current polling, new messages incoming while processing this batch of messages will not be processed until the next cycle.
             // lookup can message in table
             // Exit if message found or if end of table reached
-            while (rxMsg.standardMessageID != CANMessageLookUpTable[lookupTableIndex].messageID && lookupTableIndex < NUMBER_CAN_MESSAGE_IDS)
-            {
+            while (rxMsg.standardMessageID != CANMessageLookUpTable[lookupTableIndex].messageID && lookupTableIndex < NUMBER_CAN_MESSAGE_IDS) {
                 // DebugPrint("%s msgId[%x] != [%x]", ICM_TAG, rxMsg.standardMessageID, CANMessageLookUpTable[lookupTableIndex].messageID);
                 lookupTableIndex++;
             }
 
             // handle the case where the message is no recognized by the look up table
-            if (lookupTableIndex < NUMBER_CAN_MESSAGE_IDS)
-            {
+            if (lookupTableIndex < NUMBER_CAN_MESSAGE_IDS) {
                 // DebugPrint("%s Executing callback", ICM_TAG);
                 CANMessageLookUpTable[lookupTableIndex].canMessageCallback(&rxMsg);
-            }
-            else
-            {
+            } else {
                 DebugPrint("%s Unknown message id [%x], index [%d]", ICM_TAG, rxMsg.standardMessageID, lookupTableIndex);
             }
         }
@@ -245,25 +231,19 @@ PUBLIC void IComms_PeriodicReceive()
  * 		Heap for Priority Queue
  *
  **********************************************************************************/
-void Heap_InitHeap(Heap_t *h)
-{
-    h->heapsize = 0;
-}
+void Heap_InitHeap(Heap_t *h) { h->heapsize = 0; }
 
-void Swap(HeapNode_t *a, HeapNode_t *b)
-{
+void Swap(HeapNode_t *a, HeapNode_t *b) {
     HeapNode_t temp;
     memcpy(&temp, b, sizeof(HeapNode_t));
     memcpy(b, a, sizeof(HeapNode_t));
     memcpy(a, &temp, sizeof(HeapNode_t));
 }
 
-void HeapifyMin(Heap_t *h, uint8_t parent)
-{
+void HeapifyMin(Heap_t *h, uint8_t parent) {
     if (h->heapsize == 1)
         return;
-    else
-    {
+    else {
         int smallest = parent;
         int l = 2 * parent + 1;
         int r = 2 * parent + 2;
@@ -271,34 +251,27 @@ void HeapifyMin(Heap_t *h, uint8_t parent)
             smallest = l;
         if (r < h->heapsize && h->heapArray[r].key < h->heapArray[smallest].key)
             smallest = r;
-        if (smallest != parent)
-        {
+        if (smallest != parent) {
             Swap(&(h->heapArray[parent]), &(h->heapArray[smallest]));
             HeapifyMin(h, smallest);
         }
     }
 }
-void Heap_Add(Heap_t *h, HeapNode_t n)
-{
+void Heap_Add(Heap_t *h, HeapNode_t n) {
     if (h->heapsize == MAX_HEAP_SIZE)
         return;
-    if (h->heapsize == 0)
-    {
+    if (h->heapsize == 0) {
         memcpy(&(h->heapArray[0]), &n, sizeof(HeapNode_t));
         h->heapsize += 1;
-    }
-    else
-    {
+    } else {
         memcpy(&(h->heapArray[h->heapsize]), &n, sizeof(HeapNode_t));
         h->heapsize += 1;
-        for (int i = h->heapsize / 2 - 1; i >= 0; i--)
-        {
+        for (int i = h->heapsize / 2 - 1; i >= 0; i--) {
             HeapifyMin(h, i);
         }
     }
 }
-HeapNode_t Heap_RemoveMin(Heap_t *h)
-{
+HeapNode_t Heap_RemoveMin(Heap_t *h) {
     if (h->heapsize == 0)
         return (HeapNode_t){0xFFFF, (iCommsMessage_t){0xFFFF, 0xFF, NULL}};
     HeapNode_t min;
@@ -306,14 +279,10 @@ HeapNode_t Heap_RemoveMin(Heap_t *h)
 
     Swap(&(h->heapArray[0]), &(h->heapArray[h->heapsize - 1]));
     h->heapsize -= 1;
-    for (int i = h->heapsize / 2 - 1; i >= 0; i--)
-    {
+    for (int i = h->heapsize / 2 - 1; i >= 0; i--) {
         HeapifyMin(h, i);
     }
     return min;
 }
 
-uint8_t Heap_GetHeapSize(Heap_t *h)
-{
-    return h->heapsize;
-}
+uint8_t Heap_GetHeapSize(Heap_t *h) { return h->heapsize; }
