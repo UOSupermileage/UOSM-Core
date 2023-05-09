@@ -166,7 +166,17 @@ PUBLIC iCommsMessage_t IComms_CreatePercentageMessage(uint16_t standardMessageID
     return IComms_CreateMessage(standardMessageID, 2, data);
 }
 
-PUBLIC iCommsMessage_t IComms_Create32BitMessage(uint16_t standardMessageID, uint32_t value) {
+PUBLIC iCommsMessage_t IComms_CreateUint32BitMessage(uint16_t standardMessageID, uint32_t value) {
+    uint8_t data[8];
+    data[0] = value;
+    data[1] = value >> 8;
+    data[2] = value >> 16;
+    data[3] = value >> 24;
+
+    return IComms_CreateMessage(standardMessageID, 4, data);
+}
+
+PUBLIC iCommsMessage_t IComms_CreateInt32BitMessage(uint16_t standardMessageID, int32_t value) {
     uint8_t data[8];
     data[0] = value;
     data[1] = value >> 8;
