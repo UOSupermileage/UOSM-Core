@@ -1,4 +1,4 @@
-#include "CANConfig.h"
+#include <CANConfig.h>
 #include "ApplicationTypes.h"
 #include "MCP2515.h"
 
