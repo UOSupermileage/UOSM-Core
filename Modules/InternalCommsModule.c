@@ -170,8 +170,8 @@ PUBLIC iCommsMessage_t IComms_Create32BitMessage(uint16_t standardMessageID, uin
     uint8_t data[8];
     data[0] = value;
     data[1] = value >> 8;
-    data[1] = value >> 16;
-    data[1] = value >> 24;
+    data[2] = value >> 16;
+    data[3] = value >> 24;
 
     return IComms_CreateMessage(standardMessageID, 4, data);
 }
