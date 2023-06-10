@@ -36,5 +36,6 @@ __weak void ErrorDataCallback(iCommsMessage_t *msg) { DebugPrint("ErrorDataCallb
 __weak void SpeedDataCallback(iCommsMessage_t *msg) { DebugPrint("SpeedDataCallback not implemented! %d", msg->standardMessageID); }
 __weak void EventDataCallback(iCommsMessage_t *msg) { DebugPrint("EventDataCallback not implemented! %d", msg->standardMessageID); }
 __weak void MotorRPMDataCallback(iCommsMessage_t *msg) { DebugPrint("MotorRPMDataCallback not implemented! %d", msg->standardMessageID); }
-__weak void VoltageDataCallback(iCommsMessage_t *msg) { DebugPrint("VoltageDataCallback not implemented! %d", msg->standardMessageID);
+__weak void VoltageDataCallback(iCommsMessage_t *msg) { DebugPrint("VoltageDataCallback not implemented! %d", msg->standardMessageID); }
+
 PUBLIC const ICommsMessageInfo *CANMessageLookUpGetInfo(ICommsMessageLookUpIndex id) { return &CANMessageLookUpTable[id]; }
