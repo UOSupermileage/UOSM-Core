@@ -13,7 +13,7 @@
 
 // CAN Message IDs for each piece of data
 // Details can be found on the CAN Reference Document
-#define NUMBER_CAN_MESSAGE_IDS 5
+#define NUMBER_CAN_MESSAGE_IDS 6
 
 typedef enum ICommsMessageLookUpIndex
 {
@@ -22,6 +22,7 @@ typedef enum ICommsMessageLookUpIndex
 	MOTOR_RPM_DATA_ID,
 	EVENT_DATA_ID,
 	ERROR_DATA_ID,
+	VOLTAGE_DATA_ID
 } ICommsMessageLookUpIndex;
 
 typedef uint16_t MessageCANID_t;
