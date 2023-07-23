@@ -1,2 +1,2 @@
-# UOSM-Core-MCU-L432
+# UOSM-Core
 Core Library for Motor Control, Steering, and Telemetry systems.
