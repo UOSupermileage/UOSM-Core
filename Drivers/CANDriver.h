@@ -9,7 +9,8 @@
 #ifndef USERDRIVERS_CANDRIVER_H_
 #define USERDRIVERS_CANDRIVER_H_
 
-#include "stm32l4xx_hal.h"
+#include "UOSMCoreConfig.h"
+
 #include "stdbool.h"
 #include "ApplicationTypes.h"
 

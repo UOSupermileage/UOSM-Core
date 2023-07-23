@@ -8,8 +8,7 @@
 #ifndef USERDRIVERS_SERIALDEBUGDRIVER_H_
 #define USERDRIVERS_SERIALDEBUGDRIVER_H_
 
-// STM headers
-#include "stm32l4xx_hal.h"
+#include "UOSMCoreConfig.h"
 
 // Standard Lib
 #include <stdarg.h>

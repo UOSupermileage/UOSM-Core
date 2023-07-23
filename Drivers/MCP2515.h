@@ -1,9 +1,7 @@
 #ifndef __MCP2515_H
 #define	__MCP2515_H
 
-#pragma anon_unions
-// STM headers
-#include "stm32l4xx_hal.h"
+#include "UOSMCoreConfig.h"
 
 #include "stdbool.h"
 /* MCP2515 SPI Instruction Set */
