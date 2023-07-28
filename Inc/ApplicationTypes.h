@@ -10,6 +10,10 @@
 #ifndef _APPLICATIONTYPES_H_
 #define _APPLICATIONTYPES_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "SerialDebugDriver.h"
 
 #define DebugPrint(...) SerialPrintln(__VA_ARGS__)
@@ -24,42 +28,36 @@
 #define MAX_PERCENTAGE 1000
 #define MIN_PERCENTAGE 0
 
-typedef enum
-{
-	RESULT_FAIL,
-	RESULT_OK
+typedef enum {
+    RESULT_FAIL,
+    RESULT_OK
 } result_t;
 
-typedef enum
-{
-	ENABLED,
-	DISABLED
+typedef enum {
+    ENABLED,
+    DISABLED
 } Enable_t;
 
-typedef enum
-{
-	THROTTLE_TOO_HIGH
+typedef enum {
+    THROTTLE_TOO_HIGH
 } ErrorCode;
 
-typedef enum
-{
-	DEADMAN,
-	TIMER,
-	MOTOR_INITIALIZING,
-	UNDERVOLTAGE
+typedef enum {
+    DEADMAN,
+    TIMER,
+    MOTOR_INITIALIZING,
+    UNDERVOLTAGE
 } EventCode;
 
-typedef enum
-{
-	MOTOR_MODE_NORMAL,
-	MOTOR_MODE_RTMI,
-	MOTOR_MODE_IDLE
+typedef enum {
+    MOTOR_MODE_NORMAL,
+    MOTOR_MODE_RTMI,
+    MOTOR_MODE_IDLE
 } MotorMode;
 
-typedef enum
-{
-	Clear = 0,
-	Set = 1
+typedef enum {
+    Clear = 0,
+    Set = 1
 } flag_status_t;
 
 typedef int16_t torque_t;
@@ -74,11 +72,14 @@ typedef uint16_t seconds_t;
 typedef uint32_t ms_t;
 typedef uint32_t current_t;
 
-typedef struct
-{
-	uint16_t standardMessageID; // 11 bit max
-	uint8_t dataLength;			// max 8
-	uint8_t data[8];
+typedef struct {
+    uint16_t standardMessageID; // 11 bit max
+    uint8_t dataLength;            // max 8
+    uint8_t data[8];
 } iCommsMessage_t;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _APPLICATIONTYPES_H_ */
