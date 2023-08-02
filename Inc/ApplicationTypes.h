@@ -46,7 +46,8 @@ typedef enum {
     DEADMAN,
     TIMER,
     MOTOR_INITIALIZING,
-    UNDERVOLTAGE
+    UNDERVOLTAGE,
+	DRIVER_ENABLED
 } EventCode;
 
 typedef enum {
