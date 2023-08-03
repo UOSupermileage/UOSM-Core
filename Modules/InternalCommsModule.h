@@ -34,6 +34,8 @@ PUBLIC iCommsMessage_t IComms_CreateErrorMessage(uint16_t standardMessageID, Err
 
 PUBLIC iCommsMessage_t IComms_CreateEventMessage(uint16_t standardMessageID, uint8_t code, uint8_t status);
 
+PUBLIC iCommsMessage_t IComms_CreatePairUInt16BitMessage(uint16_t standardMessageID, uint16_t a, uint16_t b);
+
 #ifdef __cplusplus
 }
 #endif

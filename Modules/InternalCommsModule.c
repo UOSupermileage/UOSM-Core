@@ -157,7 +157,7 @@ PUBLIC iCommsMessage_t IComms_CreateInt32BitMessage(uint16_t standardMessageID, 
 	return IComms_CreateMessage(standardMessageID, 4, data);
 }
 
-PUBLIC iCommsMessage_t IComms_CreateErrorMessage(uint16_t standardMessageID, uint8_t code, uint8_t status) {
+PUBLIC iCommsMessage_t IComms_CreateErrorMessage(uint16_t standardMessageID, ErrorCode code, flag_status_t status) {
 	uint8_t data[8];
 	data[0] = status;
 	data[1] = code;
@@ -171,4 +171,14 @@ PUBLIC iCommsMessage_t IComms_CreateEventMessage(uint16_t standardMessageID, uin
 	data[1] = code;
 
 	return IComms_CreateMessage(standardMessageID, 2, data);
+}
+
+PUBLIC iCommsMessage_t IComms_CreatePairUInt16BitMessage(uint16_t standardMessageID, uint16_t a, uint16_t b) {
+        uint8_t data[8];
+        data[0] = a;
+        data[1] = a >> 8;
+        data[2] = b;
+        data[3] = b >> 8;
+
+        return IComms_CreateMessage(standardMessageID, 4, data);
 }
