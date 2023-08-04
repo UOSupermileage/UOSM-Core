@@ -51,7 +51,8 @@ typedef enum {
     DEADMAN,
     TIMER,
     MOTOR_INITIALIZING,
-    UNDERVOLTAGE
+    UNDERVOLTAGE,
+    DRIVER_ENABLED
 } EventCode;
 
 typedef enum {
@@ -70,12 +71,12 @@ typedef uint16_t length_t;
 typedef uint16_t percentage_t;
 typedef int32_t velocity_t;
 typedef uint16_t throttle_raw_t;
-typedef uint32_t voltage_t;
+typedef uint16_t voltage_t;
 typedef uint16_t speed_t;
 typedef float km_per_second_t;
 typedef uint16_t seconds_t;
 typedef uint32_t ms_t;
-typedef uint32_t current_t;
+typedef uint16_t current_t;
 
 typedef struct {
     uint16_t standardMessageID; // 11 bit max

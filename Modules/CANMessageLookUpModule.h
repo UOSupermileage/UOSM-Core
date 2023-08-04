@@ -24,7 +24,7 @@ typedef enum ICommsMessageLookUpIndex {
     MOTOR_RPM_DATA_ID,
     EVENT_DATA_ID,
     ERROR_DATA_ID,
-    VOLTAGE_DATA_ID
+    CURRENT_VOLTAGE_DATA_ID
 } ICommsMessageLookUpIndex;
 
 typedef uint16_t MessageCANID_t;
