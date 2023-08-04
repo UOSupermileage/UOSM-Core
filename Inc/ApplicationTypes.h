@@ -14,9 +14,14 @@
 extern "C" {
 #endif
 
+#ifdef STM
 #include "SerialDebugDriver.h"
-
 #define DebugPrint(...) SerialPrintln(__VA_ARGS__)
+#else
+inline void SerialPrintln(const char * message, ...) {};
+#define DebugPrint(...) SerialPrintln(__VA_ARGS__)
+#endif
+
 
 #include <stdint.h>
 
