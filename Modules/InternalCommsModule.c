@@ -182,3 +182,17 @@ PUBLIC iCommsMessage_t IComms_CreatePairUInt16BitMessage(uint16_t standardMessag
 
         return IComms_CreateMessage(standardMessageID, 4, data);
 }
+
+PUBLIC uint16_pair_t readMsgPairUInt16Bit(iCommsMessage_t *msg) {
+        uint16_pair_t pair = {};
+
+        if (msg->dataLength != 4) { return pair; }
+
+        pair.a = msg->data[1] << 8;
+        pair.a |= msg->data[0];
+
+        pair.b = msg->data[3] << 8;
+        pair.b |= msg->data[2];
+
+        return pair;
+}

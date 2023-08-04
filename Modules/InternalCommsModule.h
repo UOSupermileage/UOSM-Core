@@ -36,6 +36,17 @@ PUBLIC iCommsMessage_t IComms_CreateEventMessage(uint16_t standardMessageID, uin
 
 PUBLIC iCommsMessage_t IComms_CreatePairUInt16BitMessage(uint16_t standardMessageID, uint16_t a, uint16_t b);
 
+typedef union {
+    uint32_t all;
+    struct {
+        uint16_t a:16;
+        uint16_t b:16;
+        uint32_t reserved;
+    };
+} uint16_pair_t;
+
+PUBLIC uint16_pair_t readMsgPairUInt16Bit(iCommsMessage_t *msg);
+
 #ifdef __cplusplus
 }
 #endif
