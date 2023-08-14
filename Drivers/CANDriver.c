@@ -211,56 +211,56 @@ uint8_t CANSPI_Receive(iCommsMessage_t * rxMsg)
 	rxStatus.ctrl_rx_status = MCP2515_GetRxStatus();
 
 	/* 버퍼에 수신된 메시지가 있는지 확인 */
-	if (rxStatus.rxBuffer != 0)
-	{
-	/* 어떤 버퍼에 메시지가 있는지 확인 후 처리 */
-	if ((rxStatus.rxBuffer == MSG_IN_RXB0)|(rxStatus.rxBuffer == MSG_IN_BOTH_BUFFERS))
-	{
-	  MCP2515_ReadRxSequence(MCP2515_READ_RXB0SIDH, rxReg.rx_reg_array, sizeof(rxReg.rx_reg_array));
-	}
-	else if (rxStatus.rxBuffer == MSG_IN_RXB1)
-	{
-	  MCP2515_ReadRxSequence(MCP2515_READ_RXB1SIDH, rxReg.rx_reg_array, sizeof(rxReg.rx_reg_array));
-	}
+	if (rxStatus.rxBuffer != 0) {
+            /* 어떤 버퍼에 메시지가 있는지 확인 후 처리 */
+            if ((rxStatus.rxBuffer == MSG_IN_RXB0)|(rxStatus.rxBuffer == MSG_IN_BOTH_BUFFERS))
+            {
+              MCP2515_ReadRxSequence(MCP2515_READ_RXB0SIDH, rxReg.rx_reg_array, sizeof(rxReg.rx_reg_array));
+            }
+            else if (rxStatus.rxBuffer == MSG_IN_RXB1)
+            {
+              MCP2515_ReadRxSequence(MCP2515_READ_RXB1SIDH, rxReg.rx_reg_array, sizeof(rxReg.rx_reg_array));
+            }
 
-	/* Extended 타입 */
-	if (rxStatus.msgType == dEXTENDED_CAN_MSG_ID_2_0B)
-	{
-	  tempCanMsg.frame.idType = (uint8_t) dEXTENDED_CAN_MSG_ID_2_0B;
-	  tempCanMsg.frame.id = convertReg2ExtendedCANid(rxReg.RXBnEID8, rxReg.RXBnEID0, rxReg.RXBnSIDH, rxReg.RXBnSIDL);
-	}
-	else
-	{
-	  /* Standard 타입 */
-	  tempCanMsg.frame.idType = (uint8_t) dSTANDARD_CAN_MSG_ID_2_0B;
-	  tempCanMsg.frame.id = convertReg2StandardCANid(rxReg.RXBnSIDH, rxReg.RXBnSIDL);
-	}
+            /* Extended 타입 */
+            if (rxStatus.msgType == dEXTENDED_CAN_MSG_ID_2_0B)
+            {
+              tempCanMsg.frame.idType = (uint8_t) dEXTENDED_CAN_MSG_ID_2_0B;
+              tempCanMsg.frame.id = convertReg2ExtendedCANid(rxReg.RXBnEID8, rxReg.RXBnEID0, rxReg.RXBnSIDH, rxReg.RXBnSIDL);
+            }
+            else
+            {
+              /* Standard 타입 */
+              tempCanMsg.frame.idType = (uint8_t) dSTANDARD_CAN_MSG_ID_2_0B;
+              tempCanMsg.frame.id = convertReg2StandardCANid(rxReg.RXBnSIDH, rxReg.RXBnSIDL);
+            }
 
-	tempCanMsg.frame.dlc   = rxReg.RXBnDLC;
-	tempCanMsg.frame.data[0] = rxReg.RXBnD0;
-	tempCanMsg.frame.data[1] = rxReg.RXBnD1;
-	tempCanMsg.frame.data[2] = rxReg.RXBnD2;
-	tempCanMsg.frame.data[3] = rxReg.RXBnD3;
-	tempCanMsg.frame.data[4] = rxReg.RXBnD4;
-	tempCanMsg.frame.data[5] = rxReg.RXBnD5;
-	tempCanMsg.frame.data[6] = rxReg.RXBnD6;
-	tempCanMsg.frame.data[7] = rxReg.RXBnD7;
+            tempCanMsg.frame.dlc   = rxReg.RXBnDLC;
+            tempCanMsg.frame.data[0] = rxReg.RXBnD0;
+            tempCanMsg.frame.data[1] = rxReg.RXBnD1;
+            tempCanMsg.frame.data[2] = rxReg.RXBnD2;
+            tempCanMsg.frame.data[3] = rxReg.RXBnD3;
+            tempCanMsg.frame.data[4] = rxReg.RXBnD4;
+            tempCanMsg.frame.data[5] = rxReg.RXBnD5;
+            tempCanMsg.frame.data[6] = rxReg.RXBnD6;
+            tempCanMsg.frame.data[7] = rxReg.RXBnD7;
 
-	// Pack into iCommsMessage_t
-	rxMsg->standardMessageID = tempCanMsg.frame.id;
-	rxMsg->dataLength = tempCanMsg.frame.dlc;
+            // Pack into iCommsMessage_t
+            rxMsg->standardMessageID = tempCanMsg.frame.id;
+            rxMsg->dataLength = tempCanMsg.frame.dlc;
 
-	if (tempCanMsg.frame.dlc == 255) {
-		DebugPrint("IGNORING CAN, MESSAGE PROBABLY CORRUPTED");
-		return 0;
-	}
+            // If message array is longer then 8 bytes, something went wrong.
+            // TODO: To be tested.
+            if (tempCanMsg.frame.dlc > 8) {
+                    DebugPrint("IGNORING CAN, MESSAGE PROBABLY CORRUPTED");
+                    return 0;
+            }
 
-	// TODO: Make this not crash when CAN
-	for(uint8_t i=0; i<tempCanMsg.frame.dlc; i++)
-	{
-		rxMsg->data[i] = tempCanMsg.frame.data[i];
-	}
-	returnValue = 1;
+            for(uint8_t i = 0; i < tempCanMsg.frame.dlc; i++)
+            {
+                    rxMsg->data[i] = tempCanMsg.frame.data[i];
+            }
+            returnValue = 1;
 	}
 
 	return (returnValue);

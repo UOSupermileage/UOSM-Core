@@ -93,16 +93,17 @@ PUBLIC result_t IComms_Transmit(iCommsMessage_t *txMsg) {
 
 PUBLIC void IComms_PeriodicReceive() {
 	for (uint8_t i = 0; i < batchSize && ICOMMS_DRIVER_MESSAGE_AVAILABLE() != 0; i++) {
-		iCommsMessage_t rxMsg;
+		// Create an empty message to populate
+        iCommsMessage_t rxMsg;
+
 		result_t ret = ICOMMS_DRIVER_RECEIVE_MESSAGE(&rxMsg);
 		if (ret == RESULT_FAIL) {
 			DebugPrint("#ICM: FAILED TO RETRIEVE ICOMMS MESSAGE FROM DRIVER");
 		} else {
 			uint8_t lookupTableIndex = 0;
 
-			// NOTE: with the current polling, new messages incoming while processing this batch of messages will not be processed until the next cycle.
-			// lookup can message in table
-			// Exit if message found or if end of table reached
+			// Lookup CAN message in table
+			// Exit while loop if message found or if end of table reached
 			while (rxMsg.standardMessageID != CANMessageLookUpTable[lookupTableIndex].messageID && lookupTableIndex < NUMBER_CAN_MESSAGE_IDS) {
 				// DebugPrint("%s msgId[%x] != [%x]", ICM_TAG, rxMsg.standardMessageID, CANMessageLookUpTable[lookupTableIndex].messageID);
 				lookupTableIndex++;
@@ -111,6 +112,7 @@ PUBLIC void IComms_PeriodicReceive() {
 			// handle the case where the message is no recognized by the look up table
 			if (lookupTableIndex < NUMBER_CAN_MESSAGE_IDS) {
 				// DebugPrint("%s Executing callback", ICM_TAG);
+                // Execute callback for message
 				CANMessageLookUpTable[lookupTableIndex].canMessageCallback(&rxMsg);
 			} else {
 				DebugPrint("%s Unknown message id [%x], index [%d]", ICM_TAG, rxMsg.standardMessageID, lookupTableIndex);
