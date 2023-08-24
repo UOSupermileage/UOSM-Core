@@ -11,6 +11,12 @@
 #define _APPLICATIONTYPES_H_
 
 #ifdef __cplusplus
+
+#ifndef STM
+#include <cstdio>
+#include <cstdarg>
+#endif
+
 extern "C" {
 #endif
 
@@ -18,7 +24,13 @@ extern "C" {
 #include "SerialDebugDriver.h"
 #define DebugPrint(...) SerialPrintln(__VA_ARGS__)
 #else
-inline void SerialPrintln(const char * message, ...) {};
+
+inline void SerialPrintln(const char * message, ...) {
+    va_list args;
+    va_start(args, message);
+    printf(message, args);
+    va_end(args);
+};
 #define DebugPrint(...) SerialPrintln(__VA_ARGS__)
 #endif
 
