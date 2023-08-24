@@ -34,7 +34,8 @@ typedef struct {
     MessageCANID_t messageID;
     uint8_t numberOfBytes;
 
-    void (* canMessageCallback)(iCommsMessage_t* msg);
+    // Lambda Function. Instructions to execute when a message of this type is received.
+    void (*canMessageCallback)(iCommsMessage_t* msg);
 
 } ICommsMessageInfo;
 

@@ -44,6 +44,11 @@ typedef enum {
 } Enable_t;
 
 typedef enum {
+    MOTOR_LOW_SPEED,
+    MOTOR_HIGH_SPEED
+} MotorCode;
+
+typedef enum {
     THROTTLE_TOO_HIGH
 } ErrorCode;
 

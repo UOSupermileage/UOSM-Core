@@ -47,6 +47,11 @@ PUBLIC uint8_t CANSPI_isRxErrorPassive(void);
 
 PUBLIC uint8_t CANSPI_isTxErrorPassive(void);
 
+/**
+ * Convert message contents into a 32 bit unsigned integer
+ * @param msg
+ * @return
+ */
 PUBLIC uint32_t readMsg(iCommsMessage_t* msg);
 
 PUBLIC iCommsMessage_t createMsg(uint16_t msgId, uint32_t data);
