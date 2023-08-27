@@ -11,29 +11,11 @@
 #define _APPLICATIONTYPES_H_
 
 #ifdef __cplusplus
-
-#ifndef STM
-#include <cstdio>
-#include <cstdarg>
-#endif
-
 extern "C" {
 #endif
 
-#ifdef STM
 #include "SerialDebugDriver.h"
 #define DebugPrint(...) SerialPrintln(__VA_ARGS__)
-#else
-
-inline void SerialPrintln(const char * message, ...) {
-    va_list args;
-    va_start(args, message);
-    printf(message, args);
-    va_end(args);
-};
-#define DebugPrint(...) SerialPrintln(__VA_ARGS__)
-#endif
-
 
 #include <stdint.h>
 
@@ -49,11 +31,6 @@ typedef enum {
     RESULT_FAIL,
     RESULT_OK
 } result_t;
-
-typedef enum {
-    ENABLED,
-    DISABLED
-} Enable_t;
 
 typedef enum {
     MOTOR_LOW_SPEED,
@@ -90,7 +67,6 @@ typedef int32_t velocity_t;
 typedef uint16_t throttle_raw_t;
 typedef uint16_t voltage_t;
 typedef uint16_t speed_t;
-typedef float km_per_second_t;
 typedef uint16_t seconds_t;
 typedef uint32_t ms_t;
 typedef uint16_t current_t;

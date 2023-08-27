@@ -7,22 +7,21 @@
 
 #include "SerialDebugDriver.h"
 
-extern UART_HandleTypeDef DEBUG_UART;
+#ifdef STM
 static char messageBuf[MAX_SERIAL_PRINT_LENGTH];
+
+extern UART_HandleTypeDef DEBUG_UART;
 
 void SerialPrint(const char * message, ...)
 {
-//#ifdef VERBOSE
 	va_list args;
 	va_start(args, message);
 	uint16_t len = vsprintf(messageBuf, message, args);
 	HAL_UART_Transmit(&DEBUG_UART, (uint8_t*)messageBuf, len, HAL_MAX_DELAY);
 	va_end(args);
-//#endif
 }
 void SerialPrintln(const char * message, ...)
 {
-//#ifdef VERBOSE
 	va_list args;
 	va_start(args, message);
 	uint16_t len = vsprintf(messageBuf, message, args);
@@ -30,5 +29,18 @@ void SerialPrintln(const char * message, ...)
 	messageBuf[len+1] = '\r';
 	HAL_UART_Transmit(&DEBUG_UART, (uint8_t*)messageBuf, len+2, HAL_MAX_DELAY);
 	va_end(args);
-//#endif
 }
+#else
+void SerialPrint(const char * message, ...) {
+    va_list args;
+    va_start(args, message);
+    ExternalSerialPrint(message, args);
+    va_end(args);
+}
+void SerialPrintln(const char * message, ...) {
+    va_list args;
+    va_start(args, message);
+    ExternalSerialPrintln(message, args);
+    va_end(args);
+}
+#endif

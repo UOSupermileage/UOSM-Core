@@ -1,9 +1,9 @@
-#include "UOSMCoreConfig.h"
-#include "ApplicationTypes.h"
 #include "MCP2515.h"
 
 /* Pin 설정에 맞게 수정필요. Modify below items for your SPI configurations */
+#ifdef EXT_SPI_CAN
 extern SPI_HandleTypeDef EXT_SPI_CAN;
+#endif
 
 /* Prototypes */
 static void SPI_Tx(uint8_t data);
@@ -22,7 +22,7 @@ bool MCP2515_Initialize(void)
 
   do {
     /* SPI Ready 확인 */
-    if(HAL_SPI_GetState(SPI_CAN) == HAL_SPI_STATE_READY) {
+    if(MCP2515_SPI_READY) {
     	  DebugPrint("Succeeded to init MCP");
     	return true;
     }
@@ -231,25 +231,25 @@ void MCP2515_BitModify(uint8_t address, uint8_t mask, uint8_t data)
 /* SPI Tx Wrapper 함수 */
 static void SPI_Tx(uint8_t data)
 {
-  HAL_SPI_Transmit(SPI_CAN, &data, 1, SPI_TIMEOUT);
+    MCP2515_SPI_TRANSMIT(&data, 1);
 }
 
 /* SPI Tx Wrapper 함수 */
 static void SPI_TxBuffer(uint8_t *buffer, uint8_t length)
 {
-  HAL_SPI_Transmit(SPI_CAN, buffer, length, SPI_TIMEOUT);
+    MCP2515_SPI_TRANSMIT(buffer, length);
 }
 
 /* SPI Rx Wrapper 함수 */
 static uint8_t SPI_Rx(void)
 {
   uint8_t retVal;
-  HAL_SPI_Receive(SPI_CAN, &retVal, 1, SPI_TIMEOUT);
+    MCP2515_SPI_RECEIVE(&retVal, 1);
   return retVal;
 }
 
 /* SPI Rx Wrapper 함수 */
 static void SPI_RxBuffer(uint8_t *buffer, uint8_t length)
 {
-  HAL_SPI_Receive(SPI_CAN, buffer, length, SPI_TIMEOUT);
+    MCP2515_SPI_RECEIVE(buffer, length);
 }

@@ -13,10 +13,10 @@
 extern "C" {
 #endif
 
-#include "UOSMCoreConfig.h"
-
 #include "stdbool.h"
 #include "ApplicationTypes.h"
+#include "UOSMCoreConfig.h"
+
 
 typedef union {
     struct {

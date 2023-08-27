@@ -8,7 +8,6 @@
 #include "CANMessageLookUpModule.h"
 #include "CANDriver.h"
 
-// Callbacks
 extern void ThrottleDataCallback(iCommsMessage_t *msg);
 extern void ErrorDataCallback(iCommsMessage_t *msg);
 extern void SpeedDataCallback(iCommsMessage_t *msg);
@@ -30,12 +29,5 @@ const ICommsMessageInfo CANMessageLookUpTable[NUMBER_CAN_MESSAGE_IDS] = {
     {ERROR_DATA_ID, 0x0401, 2, &ErrorDataCallback},
     {CURRENT_VOLTAGE_DATA_ID, 0x0004, 2, &CurrentVoltageDataCallback},
 };
-
-__weak void ThrottleDataCallback(iCommsMessage_t *msg) { DebugPrint("ThrottleDataCallback not implemented! %d", msg->standardMessageID); }
-__weak void ErrorDataCallback(iCommsMessage_t *msg) { DebugPrint("ErrorDataCallback not implemented! %d", msg->standardMessageID); }
-__weak void SpeedDataCallback(iCommsMessage_t *msg) { DebugPrint("SpeedDataCallback not implemented! %d", msg->standardMessageID); }
-__weak void EventDataCallback(iCommsMessage_t *msg) { DebugPrint("EventDataCallback not implemented! %d", msg->standardMessageID); }
-__weak void MotorRPMDataCallback(iCommsMessage_t *msg) { DebugPrint("MotorRPMDataCallback not implemented! %d", msg->standardMessageID); }
-__weak void CurrentVoltageDataCallback(iCommsMessage_t *msg) { DebugPrint("CurrentVoltageDataCallback not implemented! %d", msg->standardMessageID); }
 
 PUBLIC const ICommsMessageInfo *CANMessageLookUpGetInfo(ICommsMessageLookUpIndex id) { return &CANMessageLookUpTable[id]; }

@@ -6,8 +6,9 @@ extern "C" {
 #endif
 
 #include "UOSMCoreConfig.h"
-
+#include "ApplicationTypes.h"
 #include "stdbool.h"
+
 /* MCP2515 SPI Instruction Set */
 #define MCP2515_RESET           0xC0
 
