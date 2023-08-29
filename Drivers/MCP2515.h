@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include "UOSMCoreConfig.h"
+#include "../../UOSM-Core-Config/Inc/UOSMCoreConfig.h"
 #include "ApplicationTypes.h"
 #include "stdbool.h"
 

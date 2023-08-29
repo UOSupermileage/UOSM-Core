@@ -24,7 +24,11 @@
     "flags": [
       "-I Drivers",
       "-I Inc",
-      "-I Modules"
+      "-I Modules",
+      "-I Utils"
     ]
+  },
+  "dependencies": {
+    "UOSM-Core-Config": "*"
   }
 }
