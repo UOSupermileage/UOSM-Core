@@ -18,7 +18,6 @@ template<typename T>
 class DataQueue {
 private:
     T* values;
-    uint8_t largest;
     uint8_t head;
     uint8_t size;
 public:
@@ -30,7 +29,6 @@ public:
         }
 
         values = new T[size];
-        largest = 0;
     }
 
 //    DataQueue(const DataQueue&) = delete;
@@ -68,14 +66,6 @@ public:
         return values[head - 1];
     }
 
-    [[nodiscard]] T getLargestValue() const noexcept(false) {
-        if (head == 0) {
-            throw std::out_of_range("DataQueue is empty.");
-        }
-
-        return values[largest];
-    }
-
     /**
      * Copy a value into the bar data collection.
      * IMPORTANT: This creates a copy of the passed value.
@@ -90,11 +80,6 @@ public:
         }
 
         values[head] = value;
-
-        if (value > values[largest]) {
-            largest = head;
-        }
-
         head++;
     }
 
@@ -111,24 +96,7 @@ public:
         }
 
         uint8_t i = head - 1;
-
-        bool shouldScanForLargest = value < values[i];
-
         values[i] = value;
-
-        for (int n = 0; n < head; n++) {
-            printf("%d: %d, ", n, values[n]);
-        }
-
-        if (shouldScanForLargest) {
-            for (int n = 0; n < head; n++) {
-                if (values[n] > values[largest]) {
-                    largest = n;
-                }
-            }
-        } else if (value > values[largest]) {
-            largest = i;
-        }
     }
 };
 
