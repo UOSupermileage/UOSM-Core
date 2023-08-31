@@ -22,8 +22,6 @@ private:
     uint8_t size;
 public:
     explicit DataQueue(uint8_t size): size(size), head(0) {
-        printf("Constructing DataQueue with size %d", size);
-
         if (size == 0) {
             throw std::invalid_argument("Size must be at least 1");
         }
