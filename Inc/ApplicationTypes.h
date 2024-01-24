@@ -77,6 +77,8 @@ typedef uint16_t seconds_t;
 typedef uint32_t ms_t;
 typedef uint16_t current_t;
 typedef uint16_t watt_hour_t;
+typedef uint32_t pressure_raw_t;
+typedef uint32_t temperature_raw_t;
 
 typedef struct {
     uint16_t standardMessageID; // 11 bit max
@@ -97,11 +99,6 @@ typedef struct {
     float heading;
     float altitude;
 } gps_coordinate_t;
-
-typedef struct {
-    double pressure;
-    double temp;
-} pressure_t;
 
 #ifdef __cplusplus
 }

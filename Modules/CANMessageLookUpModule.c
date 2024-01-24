@@ -14,6 +14,8 @@ extern void SpeedDataCallback(iCommsMessage_t *msg);
 extern void EventDataCallback(iCommsMessage_t *msg);
 extern void MotorRPMDataCallback(iCommsMessage_t *msg);
 extern void CurrentVoltageDataCallback(iCommsMessage_t *msg);
+extern void PressureDataCallback(iCommsMessage_t *msg);
+extern void TemperatureDataCallback(iCommsMessage_t *msg);
 
 /*********************************************************************************
  *
@@ -28,6 +30,8 @@ const ICommsMessageInfo CANMessageLookUpTable[NUMBER_CAN_MESSAGE_IDS] = {
     {EVENT_DATA_ID, 0x0400, 2, &EventDataCallback},
     {ERROR_DATA_ID, 0x0401, 2, &ErrorDataCallback},
     {CURRENT_VOLTAGE_DATA_ID, 0x0004, 2, &CurrentVoltageDataCallback},
+    {PRESSURE_DATA_ID, 0x0005, 4, &PressureDataCallback},
+    {TEMPERATURE_DATA_ID, 0x0006, 4, &TemperatureDataCallback},
 };
 
 PUBLIC const ICommsMessageInfo *CANMessageLookUpGetInfo(ICommsMessageLookUpIndex id) { return &CANMessageLookUpTable[id]; }
