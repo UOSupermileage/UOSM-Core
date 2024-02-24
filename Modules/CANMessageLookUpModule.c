@@ -10,21 +10,27 @@
 
 void ThrottleDataCallback(iCommsMessage_t *msg) {
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
+    SerialPrintln("CAN message received");
 }
 void ErrorDataCallback(iCommsMessage_t *msg) {
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
+    SerialPrintln("CAN message received");
 }
 void SpeedDataCallback(iCommsMessage_t *msg) {
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
+    SerialPrintln("CAN message received");
 }
 void EventDataCallback(iCommsMessage_t *msg) {
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
+    SerialPrintln("CAN message received");
 }
 void MotorRPMDataCallback(iCommsMessage_t *msg) {
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
+    SerialPrintln("CAN message received");
 }
 void CurrentVoltageDataCallback(iCommsMessage_t *msg) {
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
+    SerialPrintln("CAN message received");
 }
 
 /*********************************************************************************

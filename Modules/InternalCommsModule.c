@@ -92,13 +92,14 @@ PUBLIC result_t IComms_Transmit(iCommsMessage_t *txMsg) {
 }
 
 PUBLIC void IComms_PeriodicReceive() {
+    DebugPrint("#ICM Entered IComms_PeriodicReceive %d", ICOMMS_DRIVER_MESSAGE_AVAILABLE());
 	for (uint8_t i = 0; i < batchSize && ICOMMS_DRIVER_MESSAGE_AVAILABLE() != 0; i++) {
 		// Create an empty message to populate
         iCommsMessage_t rxMsg;
 
 		result_t ret = ICOMMS_DRIVER_RECEIVE_MESSAGE(&rxMsg);
 		if (ret == RESULT_FAIL) {
-			SerialPrintln("#ICM: FAILED TO RETRIEVE ICOMMS MESSAGE FROM DRIVER");
+			DebugPrint("failed");
 		} else {
 			uint8_t lookupTableIndex = 0;
 
