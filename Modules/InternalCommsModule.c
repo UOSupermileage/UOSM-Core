@@ -98,7 +98,7 @@ PUBLIC void IComms_PeriodicReceive() {
 
 		result_t ret = ICOMMS_DRIVER_RECEIVE_MESSAGE(&rxMsg);
 		if (ret == RESULT_FAIL) {
-			DebugPrint("#ICM: FAILED TO RETRIEVE ICOMMS MESSAGE FROM DRIVER");
+			SerialPrintln("#ICM: FAILED TO RETRIEVE ICOMMS MESSAGE FROM DRIVER");
 		} else {
 			uint8_t lookupTableIndex = 0;
 

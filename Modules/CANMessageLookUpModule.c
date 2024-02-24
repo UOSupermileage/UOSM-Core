@@ -8,12 +8,24 @@
 #include "CANMessageLookUpModule.h"
 #include "CANDriver.h"
 
-extern void ThrottleDataCallback(iCommsMessage_t *msg);
-extern void ErrorDataCallback(iCommsMessage_t *msg);
-extern void SpeedDataCallback(iCommsMessage_t *msg);
-extern void EventDataCallback(iCommsMessage_t *msg);
-extern void MotorRPMDataCallback(iCommsMessage_t *msg);
-extern void CurrentVoltageDataCallback(iCommsMessage_t *msg);
+void ThrottleDataCallback(iCommsMessage_t *msg) {
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
+}
+void ErrorDataCallback(iCommsMessage_t *msg) {
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
+}
+void SpeedDataCallback(iCommsMessage_t *msg) {
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
+}
+void EventDataCallback(iCommsMessage_t *msg) {
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
+}
+void MotorRPMDataCallback(iCommsMessage_t *msg) {
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
+}
+void CurrentVoltageDataCallback(iCommsMessage_t *msg) {
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
+}
 
 /*********************************************************************************
  *
