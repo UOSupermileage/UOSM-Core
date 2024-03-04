@@ -26,7 +26,7 @@ void EventDataCallback(iCommsMessage_t *msg) {
 }
 void MotorRPMDataCallback(iCommsMessage_t *msg) {
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
-    SerialPrintln("CAN message received");
+    SerialPrintln("CAN RPM received");
 }
 void CurrentVoltageDataCallback(iCommsMessage_t *msg) {
     HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
