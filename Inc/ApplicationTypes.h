@@ -104,6 +104,17 @@ typedef struct {
     double temp;
 } pressure_t;
 
+typedef union {
+    uint16_t all;
+    struct {
+        uint16_t hazards_enabled:1;
+        uint16_t left_turn_enabled:1;
+        uint16_t right_turn_enabled:1;
+        uint16_t headlights_enabled:1;
+        uint16_t low_beams_enabled:1;
+    };
+} lights_status_t;
+
 #ifdef __cplusplus
 }
 #endif
