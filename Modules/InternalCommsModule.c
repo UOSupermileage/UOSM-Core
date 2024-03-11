@@ -92,7 +92,7 @@ PUBLIC result_t IComms_Transmit(iCommsMessage_t *txMsg) {
 }
 
 PUBLIC void IComms_PeriodicReceive() {
-    DebugPrint("Number of messages available %x", ICOMMS_DRIVER_MESSAGE_AVAILABLE());
+    //DebugPrint("Number of messages available %x", ICOMMS_DRIVER_MESSAGE_AVAILABLE());
     iCommsMessage_t rxMsg;
     result_t ret = ICOMMS_DRIVER_RECEIVE_MESSAGE(&rxMsg);
     //DebugPrint("Content of buffer %x",ret);
