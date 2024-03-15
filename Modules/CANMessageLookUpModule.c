@@ -24,14 +24,16 @@ extern void LightsDataCallback(iCommsMessage_t *msg);
  *
  **********************************************************************************/
 const ICommsMessageInfo CANMessageLookUpTable[NUMBER_CAN_MESSAGE_IDS] = {
-        // Message Index			CAN ID		Num of Bytes		Callback
-        {THROTTLE_DATA_ID, 0x0001, 2, &ThrottleDataCallback},
-        {SPEED_DATA_ID, 0x0002, 4, &SpeedDataCallback},
-        {MOTOR_RPM_DATA_ID, 0x0003, 4, &MotorRPMDataCallback},
-        {EVENT_DATA_ID, 0x0400, 2, &EventDataCallback},
-        {ERROR_DATA_ID, 0x0401, 2, &ErrorDataCallback},
-        {CURRENT_VOLTAGE_DATA_ID, 0x0004, 2, &CurrentVoltageDataCallback},
-        {LIGHT_DATA_ID,0x0305,2,&LightsDataCallback}
+    // Message Index			CAN ID		Num of Bytes		Callback
+    {THROTTLE_DATA_ID, 0x0001, 2, &ThrottleDataCallback},
+    {SPEED_DATA_ID, 0x0002, 4, &SpeedDataCallback},
+    {MOTOR_RPM_DATA_ID, 0x0003, 4, &MotorRPMDataCallback},
+    {EVENT_DATA_ID, 0x0400, 2, &EventDataCallback},
+    {ERROR_DATA_ID, 0x0401, 2, &ErrorDataCallback},
+    {CURRENT_VOLTAGE_DATA_ID, 0x0004, 2, &CurrentVoltageDataCallback},
+    {PRESSURE_DATA_ID, 0x0005, 4, &PressureDataCallback},
+    {TEMPERATURE_DATA_ID, 0x0006, 4, &TemperatureDataCallback},
+    {LIGHT_DATA_ID,0x0305,2,&LightsDataCallback}
 };
 
 PUBLIC const ICommsMessageInfo *CANMessageLookUpGetInfo(ICommsMessageLookUpIndex id) { return &CANMessageLookUpTable[id]; }

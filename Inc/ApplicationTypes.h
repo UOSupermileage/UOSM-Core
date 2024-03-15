@@ -78,6 +78,8 @@ typedef uint32_t ms_t;
 typedef uint16_t current_t;
 typedef uint16_t watt_hour_t;
 typedef uint8_t brightness_t;
+typedef uint32_t pressure_raw_t;
+typedef uint32_t temperature_raw_t;
 
 typedef struct {
     uint16_t standardMessageID; // 11 bit max
@@ -114,7 +116,6 @@ typedef union {
         uint32_t low_beams_enabled:1;
     };
 } lights_status_t;
-
 #ifdef __cplusplus
 }
 #endif
