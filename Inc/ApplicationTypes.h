@@ -106,6 +106,7 @@ typedef struct {
     double temp;
 } pressure_t;
 
+// Make sure to use the entire 32 bits for stable CAN transmission
 typedef union {
     uint32_t all;
     struct {
@@ -113,7 +114,7 @@ typedef union {
         uint32_t left_turn_enabled:1;
         uint32_t right_turn_enabled:1;
         uint32_t headlights_enabled:1;
-        uint32_t low_beams_enabled:1;
+        uint32_t low_beams_enabled:28;
     };
 } lights_status_t;
 #ifdef __cplusplus

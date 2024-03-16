@@ -31,9 +31,9 @@ const ICommsMessageInfo CANMessageLookUpTable[NUMBER_CAN_MESSAGE_IDS] = {
     {EVENT_DATA_ID, 0x0400, 2, &EventDataCallback},
     {ERROR_DATA_ID, 0x0401, 2, &ErrorDataCallback},
     {CURRENT_VOLTAGE_DATA_ID, 0x0004, 2, &CurrentVoltageDataCallback},
+    {LIGHT_DATA_ID,0x0305,2,&LightsDataCallback},
     {PRESSURE_DATA_ID, 0x0005, 4, &PressureDataCallback},
-    {TEMPERATURE_DATA_ID, 0x0006, 4, &TemperatureDataCallback},
-    {LIGHT_DATA_ID,0x0305,2,&LightsDataCallback}
+    {TEMPERATURE_DATA_ID, 0x0006, 4, &TemperatureDataCallback}
 };
 
 PUBLIC const ICommsMessageInfo *CANMessageLookUpGetInfo(ICommsMessageLookUpIndex id) { return &CANMessageLookUpTable[id]; }
