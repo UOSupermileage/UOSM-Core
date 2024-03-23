@@ -6,7 +6,6 @@
  */
 
 #include "SerialDebugDriver.h"
-
 #ifdef SMALL_PRINTF
 #include "printf.h"
 #else
