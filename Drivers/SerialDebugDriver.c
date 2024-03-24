@@ -12,6 +12,12 @@
 #include <stdio.h>
 #endif
 
+#ifdef SMALL_PRINTF
+#include "printf.h"
+#else
+#include <stdio.h>
+#endif
+
 #ifdef STM
 static char messageBuf[MAX_SERIAL_PRINT_LENGTH];
 
