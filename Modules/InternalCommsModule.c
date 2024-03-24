@@ -194,6 +194,45 @@ PUBLIC iCommsMessage_t IComms_CreateLightsMessage(uint16_t standardMessageID, ui
     return IComms_CreateMessage(standardMessageID, 2, data);
 }
 
+PUBLIC iCommsMessage_t IComms_CreatePairInt32Message(uint16_t standardMessageID, int32_t a, int32_t b) {
+    uint8_t data[8];
+
+    data[0] = a;
+    data[1] = a >> 8;
+    data[2] = a >> 16;
+    data[3] = a >> 24;
+    data[4] = b;
+    data[5] = b >> 8;
+    data[6] = b >> 16;
+    data[7] = b >> 24;
+
+    return IComms_CreateMessage(standardMessageID, 8, data);
+}
+
+PUBLIC result_t IComms_ReadPairInt32Message(iCommsMessage_t *msg, int32_t* a, int32_t* b) {
+    if (msg->dataLength != 8) {
+        return RESULT_FAIL;
+    }
+
+    *a = msg->data[3];
+    for (int i = 3; i > 0; i--) {
+        *a <<= 8;
+        *a |= msg->data[i - 1];
+    }
+
+    *b = msg->data[7];
+    for (int i = 7; i > 4; i--) {
+        *b <<= 8;
+        *b |= msg->data[i - 1];
+    }
+
+    return RESULT_OK;
+}
+
+PUBLIC iCommsMessage_t IComms_CreatePressureTemperatureMessage(uint16_t standardMessageID, pressure_t a, temperature_t b) {}
+
+PUBLIC result_t IComms_ReadPressureTemperatureMessage(iCommsMessage_t* msg, pressure_t* a, temperature_t* b);
+
 PUBLIC uint16_pair_t readMsgPairUInt16Bit(iCommsMessage_t *msg) {
         uint16_pair_t pair = {};
 
