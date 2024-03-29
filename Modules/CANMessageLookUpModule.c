@@ -8,6 +8,11 @@
 #include "CANMessageLookUpModule.h"
 #include "CANDriver.h"
 
+/**
+ * Do not mark these as weak, if it's not implemented somewhere else, the code will crash
+ */
+
+
 extern void ThrottleDataCallback(iCommsMessage_t *msg);
 extern void ErrorDataCallback(iCommsMessage_t *msg);
 extern void SpeedDataCallback(iCommsMessage_t *msg);
