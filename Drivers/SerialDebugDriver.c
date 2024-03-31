@@ -23,9 +23,12 @@
 #ifdef STM
 static char messageBuf[MAX_SERIAL_PRINT_LENGTH];
 
+#ifdef DEBUG_UART
 extern UART_HandleTypeDef DEBUG_UART;
+#endif
 
 void SerialPrint(const char* message, ...) {
+#ifdef DEBUG_UART
     va_list args;
     va_start(args, message);
 #ifdef SMALL_PRINTF
@@ -35,9 +38,11 @@ void SerialPrint(const char* message, ...) {
 #endif
     HAL_UART_Transmit(&DEBUG_UART, (uint8_t*) messageBuf, len, HAL_MAX_DELAY);
     va_end(args);
+#endif
 }
 
 void SerialPrintln(const char* message, ...) {
+#ifdef DEBUG_UART
     va_list args;
     va_start(args, message);
 #ifdef SMALL_PRINTF
@@ -49,6 +54,7 @@ void SerialPrintln(const char* message, ...) {
     messageBuf[len + 1] = '\r';
     HAL_UART_Transmit(&DEBUG_UART, (uint8_t*) messageBuf, len + 2, HAL_MAX_DELAY);
     va_end(args);
+#endif
 }
 
 #else
