@@ -7,7 +7,6 @@ Include in other repos using `git subtree`
 ## Commands
 ```bash
 # Pull core into project
-git pull
 git subtree pull --prefix UOSM-Core git@github.com:UOSupermileage/UOSM-Core.git main --squash
 
 # Push back into core
