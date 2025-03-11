@@ -402,14 +402,12 @@ static void convertCANid2Reg(uint32_t tempPassedInID, uint8_t canIdType, id_reg_
 }
 
 uint32_t readMsg(iCommsMessage_t *msg) {
-	int32_t value = msg->data[msg->dataLength - 1];
-
-	for (int i = msg->dataLength - 1; i > 0; i--) {
-		value <<= 8;
-		value |= msg->data[i -1];
-	}
-
-	return value;
+	uint32_t result = 0;
+	result = msg->data[0];
+	result |= (msg->data[1] << 8);
+	result |= (msg->data[2] << 16);
+	result |= (msg->data[3] << 24);
+	return result;
 }
 
 iCommsMessage_t createMsg(uint16_t msgId, uint32_t data) {

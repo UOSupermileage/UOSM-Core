@@ -191,10 +191,12 @@ iCommsMessage_t IComms_CreatePairUInt16BitMessage(uint16_t standardMessageID, ui
 
 iCommsMessage_t IComms_CreateLightsMessage(lights_status_t lights) {
     uint8_t data[8];
-    for (uint8_t i = 0; i < 4; i++)
-        data[i] = lights.all >> (8 * (3-i));
+    data[0] = lights.all;
+    data[1] = lights.all >> 8;
+    data[2] = lights.all >> 16;
+    data[3] = lights.all >> 24;
 
-    return IComms_CreateMessage(LIGHT_DATA_ID, 2, data);
+    return IComms_CreateMessage(LIGHT_DATA_ID, 4, data);
 }
 
 iCommsMessage_t IComms_CreatePairInt32Message(uint16_t standardMessageID, int32_t a, int32_t b) {
