@@ -99,16 +99,17 @@ typedef struct {
 
 // Make sure to use the entire 32 bits for stable CAN transmission
 typedef union {
-    uint64_t all;
+    uint32_t all;
     struct {
-        uint32_t hazards_enabled: 1;
-        uint32_t left_turn_enabled: 1;
-        uint32_t right_turn_enabled: 1;
-        uint32_t headlights_enabled: 1;
-        uint32_t low_beams_enabled: 1;
-        uint32_t r: 4;
-        uint32_t g: 1;
-        uint32_t b: 1;
+        uint64_t hazards_enabled: 1;
+        uint64_t left_turn_enabled: 1;
+        uint64_t right_turn_enabled: 1;
+        uint64_t headlights_enabled: 1;
+        uint64_t low_beams_enabled: 1;
+        uint64_t r: 8;
+        uint64_t g: 8;
+        uint64_t b: 8;
+        uint64_t reserved: 3;
     };
 } lights_status_t;
 

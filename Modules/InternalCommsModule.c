@@ -191,16 +191,12 @@ iCommsMessage_t IComms_CreatePairUInt16BitMessage(uint16_t standardMessageID, ui
 
 iCommsMessage_t IComms_CreateLightsMessage(lights_status_t lights) {
     uint8_t data[8];
-    data[0] = lights.hazards_enabled;
-    data[1] = lights.headlights_enabled;
-    data[2] = lights.left_turn_enabled;
-    data[3] = lights.right_turn_enabled;
-    data[4] = lights.low_beams_enabled;
-    data[5] = lights.r;
-    data[6] = lights.g;
-    data[7] = lights.b;
+    data[0] = lights.all >> 24;
+    data[1] = lights.all >> 16;
+    data[2] = lights.all >> 8;
+    data[3] = lights.all;
 
-    return IComms_CreateMessage(LIGHT_DATA_ID, 8, data);
+    return IComms_CreateMessage(LIGHT_DATA_ID, 4, data);
 }
 
 iCommsMessage_t IComms_CreatePairInt32Message(uint16_t standardMessageID, int32_t a, int32_t b) {
